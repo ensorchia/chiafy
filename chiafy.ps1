@@ -1,7 +1,7 @@
 param (
   [Parameter()]
   [switch]
-  $UninstallSpotifyStoreEdition = (Read-Host -Prompt 'Spotify Microsoft versiyonunu silmek istediğine eminmisin? (e/h)') -eq 'e',
+  $UninstallSpotifyStoreEdition = (Read-Host -Prompt 'Spotify Microsoft versiyonunu silmek istedigine eminmisin? (e/h)') -eq 'e',
   [Parameter()]
   [switch]
   $UpdateSpotify
@@ -45,7 +45,7 @@ function Get-File
 
   if ($useBitTransfer)
   {
-    Write-Information -MessageData 'Windows PowerShell çalıştırdığınız için yedek bir BitTransfer yöntemi kullanmaya çalışılınıyor'
+    Write-Information -MessageData 'Windows PowerShell calistirdiginiz icin yedek bir BitTransfer yontemi kullanmaya calisiliyor'
     Start-BitsTransfer -Source $Uri -Destination "$($TargetFile.FullName)"
   }
   else
@@ -72,10 +72,10 @@ function Get-File
       $targetStream.Write($buffer, 0, $count)
       $count = $responseStream.Read($buffer, 0, $buffer.length)
       $downloadedBytes = $downloadedBytes + $count
-      Write-Progress -Activity "Dosya yükleniyor '$downloadedFileName'" -Status "Yüklendi ($([System.Math]::Floor($downloadedBytes/1024))K of $($totalLength)K): " -PercentComplete ((([System.Math]::Floor($downloadedBytes / 1024)) / $totalLength) * 100)
+      Write-Progress -Activity "Dosya yukleniyor '$downloadedFileName'" -Status "Yuklendi ($([System.Math]::Floor($downloadedBytes/1024))K of $($totalLength)K): " -PercentComplete ((([System.Math]::Floor($downloadedBytes / 1024)) / $totalLength) * 100)
     }
 
-    Write-Progress -Activity "Yüklenme tamamlandı '$downloadedFileName'"
+    Write-Progress -Activity "Yuklenme tamamlandi '$downloadedFileName'"
 
     $targetStream.Flush()
     $targetStream.Close()
@@ -125,7 +125,7 @@ if ($PSVersionTable.PSVersion.Major -ge 7)
 
 if (Get-AppxPackage -Name SpotifyAB.SpotifyMusic)
 {
-  Write-Host "Spotify'ın desteklenmeyen Microsoft Store sürümü tespit edildi.`n"
+  Write-Host "Spotify'in desteklenmeyen Microsoft Store surumu tespit edildi.`n"
 
   if ($UninstallSpotifyStoreEdition)
   {
@@ -134,7 +134,7 @@ if (Get-AppxPackage -Name SpotifyAB.SpotifyMusic)
   }
   else
   {
-    Read-Host "Çıkılıyor...`nRastgele bir tuşa bas..."
+    Read-Host "Cikiliyor...`nRastgele bir tusa bas..."
     exit
   }
 }
@@ -150,7 +150,7 @@ try
 catch
 {
   Write-Output $_
-  Read-Host 'Rastgele bir tuşa bas...'
+  Read-Host 'Rastgele bir tusa bas...'
   exit
 }
 
@@ -164,7 +164,7 @@ if (-not $spotifyInstalled) {
 
 if (-not $UpdateSpotify -and $unsupportedClientVersion)
 {
-  if ((Read-Host -Prompt 'Chiafy yüklemek için Spotify istemcinizin güncellenmiş olması gerekir. Devam etmek istiyor musunuz? (e/h)') -ne 'e')
+  if ((Read-Host -Prompt 'Chiafy yuklemek icin Spotify istemcinizin guncellenmis olmasi gerekir. Devam etmek istiyor musunuz? (e/h)') -ne 'e')
   {
     exit
   }
@@ -172,7 +172,7 @@ if (-not $UpdateSpotify -and $unsupportedClientVersion)
 
 if (-not $spotifyInstalled -or $UpdateSpotify -or $unsupportedClientVersion)
 {
-  Write-Host 'En son Spotify kurulumu indiriliyor, lütfen bekleyin...'
+  Write-Host 'En son Spotify kurulumu indiriliyor, lutfen bekleyin...'
   $spotifySetupFilePath = Join-Path -Path $PWD -ChildPath 'SpotifyFullSetup.exe'
   try
   {
@@ -186,28 +186,28 @@ if (-not $spotifyInstalled -or $UpdateSpotify -or $unsupportedClientVersion)
   catch
   {
     Write-Output $_
-    Read-Host 'Rastgele bir tuşa bas...'
+    Read-Host 'Rastgele bir tusa bas...'
     exit
   }
   New-Item -Path $spotifyDirectory -ItemType:Directory -Force | Write-Verbose
 
   [System.Security.Principal.WindowsPrincipal] $principal = [System.Security.Principal.WindowsIdentity]::GetCurrent()
   $isUserAdmin = $principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-  Write-Host 'Yükleme calisiyor...'
+  Write-Host 'Yukleme calisiyor...'
   if ($isUserAdmin)
   {
     Write-Host
-    Write-Host 'Zamanlanmış görev oluşturuluyor...'
+    Write-Host 'Zamanlanmis gorev olusturuluyor...'
     $apppath = 'powershell.exe'
     $taskname = 'Spotify install'
     $action = New-ScheduledTaskAction -Execute $apppath -Argument "-NoLogo -NoProfile -Command & `'$spotifySetupFilePath`'"
     $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date)
     $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -WakeToRun
     Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskname -Settings $settings -Force | Write-Verbose
-    Write-Host 'Yükleme görevi zamanlanmıştır. Görev başlatılıyor...'
+    Write-Host 'Yukleme gorevi zamanlanmistir. Gorev baslatiliyor...'
     Start-ScheduledTask -TaskName $taskname
     Start-Sleep -Seconds 2
-    Write-Host 'Görev kaydı kaldırılıyor...'
+    Write-Host 'Gorev kaydi kaldiriliyor...'
     Unregister-ScheduledTask -TaskName $taskname -Confirm:$false
     Start-Sleep -Seconds 2
   }
@@ -222,7 +222,7 @@ if (-not $spotifyInstalled -or $UpdateSpotify -or $unsupportedClientVersion)
   }
 
 
-  Write-Host 'Spotify Durduruluyor...Again'
+  Write-Host 'Spotify Durduruluyor...Tekrardan'
 
   Stop-Process -Name Spotify
   Stop-Process -Name SpotifyWebHelper
@@ -244,7 +244,7 @@ try
   if ($is64Bit) {
     $uri = 'https://github.com/mrpond/BlockTheSpot/releases/latest/download/chrome_elf.zip'
   } else {
-    Write-Host 'Şu anda, x86 mimarisi yeni bir güncelleme almadığı için reklam engelleyici düzgün çalışmayabilir.'
+    Write-Host 'su anda, x86 mimarisi yeni bir guncelleme almadigi icin reklam engelleyici duzgun calismayabilir.'
     $uri = 'https://github.com/mrpond/BlockTheSpot/releases/download/2023.5.20.80/chrome_elf.zip'
   }
 
@@ -294,7 +294,7 @@ Pop-Location
 
 Remove-Item -LiteralPath $tempDirectory -Recurse
 
-Write-Host 'Crack başarılı, spotify açılıyor...'
+Write-Host 'Crack basarili, spotify aciliyor...'
 
 Start-Process -WorkingDirectory $spotifyDirectory -FilePath $spotifyExecutable
 Write-Host 'Basarili.'
