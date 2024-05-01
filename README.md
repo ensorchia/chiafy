@@ -23,7 +23,7 @@
 
 
 ### İndir/Güncelle:
-* Just download and run [Chiafy.bat](https://raw.githack.com/ensorchia/chiafy/main/Chiafy.bat)
+* Yükle ve çalıştır [Chiafy.bat](https://raw.githack.com/ensorchia/chiafy/main/Chiafy.bat)
 
 
 ### Otomatik Güncellemeleri Devre Dışı Bırakma
