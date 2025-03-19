@@ -5,7 +5,7 @@
     <h4 align="center"> <strong>Spotify için(64 bit)</strong> çok amaçlı reklam engelleyici ve atlama bypassi </h4>
     <h5 align="center">Lütfen premium satın alarak Spotify'ı destekleyin</h5>
     <p align="center">
-        <strong>Son güncelleme:</strong> 01 Mayıs 2024<br>       
+        <strong>Son güncelleme:</strong> 19 Mart 2025<br>       
     </p> 
 </center>
 
